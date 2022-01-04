@@ -1,15 +1,13 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 export default function PersonForm() {
    const [dob, setDob] = React.useState(new Date());
@@ -18,8 +16,16 @@ export default function PersonForm() {
     setDob(newValue);
   };
   return (
-    <Box>
-      <Box>
+    <Box sx={{
+      display: "flex",
+      flexDirection: "column",
+  
+      }}>
+      <Box fullWidth sx={{
+       border: 'solid 1px black',
+        borderRadius: 5,
+      padding: 5
+      }}>
         <Typography variant="h4">
   Angaben zur Person
 </Typography>
@@ -80,7 +86,11 @@ export default function PersonForm() {
       </Grid> 
         </Grid>
         </Box>
-      <Box>
+      <Box fullWidth sx={{
+       border: 'solid 1px black',
+        borderRadius: 5,
+       padding: 5
+      }}>
         <Typography variant="h4">
   Andresse
 </Typography>
@@ -117,7 +127,19 @@ export default function PersonForm() {
      
       
         </Grid>
-        </Box>
+      </Box>
+      <Box sx={{
+      display: "flex",
+        alignSelf: "flex-end",
+     padding: 3
+  
+      }}>
+       
+           <Button variant="outlined">Zuruecksetzen</Button>
+          <Button variant="outlined">Speichern</Button>
+       
+         </Box>
+      
       </Box>
  
   );
