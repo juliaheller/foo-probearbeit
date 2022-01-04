@@ -4,6 +4,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import ListTable from './ListTable';
+import ListTree from './ListTree';
+import people from '../../data/people'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -18,7 +21,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography component={'span'}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -54,10 +57,10 @@ export default function ListContainer() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        Item One
+        <ListTable data={people}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <ListTree />
       </TabPanel>
     </Box>
   );
