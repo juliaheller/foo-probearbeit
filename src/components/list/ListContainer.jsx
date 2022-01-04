@@ -60,7 +60,7 @@ export default function ListContainer() {
         <ListTable data={people}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <ListTree />
+        <ListTree data={people}/>
       </TabPanel>
     </Box>
   );
