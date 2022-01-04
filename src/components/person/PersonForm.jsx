@@ -10,21 +10,57 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 export default function PersonForm() {
-   const [dob, setDob] = React.useState(new Date());
+  
+  const [state, setState] = React.useState({
+    gender: "",
+    titel: "",
+    name: '',
+    surname: "",
+    dob: '',
+    pob: '',
+    street: '',
+    zipcode: '',
+    city: '',
+    country: ''
+  })
+  
+  
 
-  const handleChange = (newValue) => {
-    setDob(newValue);
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setState({
+      ...state,
+      [event.target.name]: value
+    });
   };
+
+
+  const createUser = async () => {
+    console.log(state);
+		const requestOptions = {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(
+			state
+			),
+		};
+		const response = await fetch("http://test", requestOptions);
+		return await response.json();
+	}
+
   return (
     <Box sx={{
       display: "flex",
       flexDirection: "column",
   
-      }}>
+    }}
+     component="form">
       <Box fullWidth sx={{
        border: 'solid 1px black',
         borderRadius: 5,
-      padding: 5
+        padding: 5
       }}>
         <Typography variant="h4">
   Angaben zur Person
@@ -37,9 +73,10 @@ export default function PersonForm() {
               fullWidth
           labelId="form-gender"
           id="gender-select"
-           value="Herr"
+          value={state.gender}
+          name="gender"
           label="Anrede"
-          // onChange={handleChange}
+          onChange={handleChange}
         >
           <MenuItem value="Frau">Frau</MenuItem>
           <MenuItem value="Herr">Herr</MenuItem>
@@ -50,11 +87,12 @@ export default function PersonForm() {
           <InputLabel id="form-titel">Titel</InputLabel>
             <Select
               fullWidth
-          labelId="form-titel"
-          id="titel-select"
-           value="Dr."
-          label="AnreTitTitelelde"
-          // onChange={handleChange}
+              labelId="form-titel"
+              id="titel-select"
+              value={state.titel}
+              label="AnreTitTitelelde"
+              name="titel"
+              onChange={handleChange}
         >
           <MenuItem value="Dr.">Dr.</MenuItem>
           <MenuItem value="Prof.">Prof.</MenuItem>
@@ -63,26 +101,27 @@ export default function PersonForm() {
   </Grid>
   <Grid item xs={6}>
    <InputLabel id="form-name">Vorname</InputLabel>
-  <TextField fullWidth id="outlined-basic" variant="outlined" />
+  <TextField value={state.name} name="name" fullWidth id="outlined-basic" variant="outlined"  onChange={handleChange}/>
   </Grid>
   <Grid item xs={6}>
    <InputLabel id="form-surname">Nachname</InputLabel>
-  <TextField fullWidth id="outlined-basic" variant="outlined" />
+  <TextField name="surname" value={state.surname} fullWidth id="outlined-basic" variant="outlined"  onChange={handleChange} />
       </Grid>
       
       <Grid item xs={6}>
    <InputLabel id="form-birthdate">Geburstdatum</InputLabel>
             <DesktopDatePicker
               fullWidth
-          inputFormat="MM/DD/yyyy"
-          value={dob}
-          onChange={handleChange}
-          renderInput={(params) => <TextField {...params} />}
+              inputFormat="MM/DD/yyyy"
+              value={state.dob}
+              name="dob" 
+              onChange={handleChange}
+              renderInput={(params) => <TextField {...params} />}
         />
       </Grid>
       <Grid item xs={6}>
    <InputLabel id="form-pob">Geburtsort</InputLabel>
-  <TextField fullWidth id="outlined-basic" variant="outlined" />
+            <TextField name="pob" value={ state.pob} fullWidth id="outlined-basic" variant="outlined"  onChange={handleChange}/>
       </Grid> 
         </Grid>
         </Box>
@@ -98,26 +137,27 @@ export default function PersonForm() {
       
       <Grid item xs={6}>
          <InputLabel id="form-street">Strasse</InputLabel>
-  <TextField fullWidth id="outlined-basic" variant="outlined" />
+  <TextField name="street" value={state.street} fullWidth id="outlined-basic" variant="outlined"  onChange={handleChange} />
   </Grid>
   <Grid item xs={6}>
   <InputLabel id="form-zipcode">Postleitzahl</InputLabel>
-  <TextField fullWidth id="outlined-basic" variant="outlined" />
+  <TextField  name="zipcode" value={state.zipcode} fullWidth id="outlined-basic" variant="outlined" />
   </Grid>
   <Grid item xs={6}>
    <InputLabel id="form-place">Ort</InputLabel>
-  <TextField fullWidth id="outlined-basic" variant="outlined" />
+  <TextField name="city" value={state.city} fullWidth id="outlined-basic" variant="outlined"  onChange={handleChange} />
       </Grid>
       
       <Grid item xs={6}>
   <InputLabel id="form-country">Land</InputLabel>
             <Select
               fullWidth
-          labelId="form-country"
-          id="country-select"
-          value="Deutschland"
-          label="Land"
-          // onChange={handleChange}
+              labelId="form-country"
+              id="country-select"
+              value={state.country}
+              name="country"
+              label="Land"
+              onChange={handleChange}
         >
           <MenuItem value="Deutschland">Deutschland</MenuItem>
           <MenuItem value="USA">USA</MenuItem>
@@ -136,7 +176,7 @@ export default function PersonForm() {
       }}>
        
            <Button variant="outlined">Zuruecksetzen</Button>
-          <Button variant="outlined">Speichern</Button>
+          <Button variant="outlined" onClick={createUser}>Speichern</Button>
        
          </Box>
       
